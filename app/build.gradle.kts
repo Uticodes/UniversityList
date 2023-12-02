@@ -9,13 +9,12 @@ plugins {
 
 android {
     namespace = "com.example.universitieslist"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.universitieslist"
         minSdk = 24
-        //noinspection EditedTargetSdkVersion
-        targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -49,7 +48,7 @@ android {
     }
     packaging {
         resources {
-            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/*"
         }
     }
 }
@@ -57,7 +56,7 @@ android {
 dependencies {
 
     implementation(libs.core.ktx)
-    implementation(libs.lifecycle.runtime.ktx)
+    implementation(libs.lifecycleRuntime)
     implementation(libs.activity.compose)
     implementation(platform(libs.compose.bom))
     implementation(libs.ui)
@@ -66,22 +65,25 @@ dependencies {
     implementation(libs.material3)
     implementation(libs.timber)
     implementation(libs.coil)
-    implementation(libs.hiltAndroid)
-    implementation(libs.hiltNavigation)
-    implementation(libs.lifecycleViewmodel)
-    implementation(libs.lifecycleRuntime)
-    implementation(libs.lifecycleLivedata)
-    implementation(libs.moshi)
-    implementation(libs.moshiCodegen)
     implementation(libs.okHttp3)
     implementation(libs.okHttp3Logging)
+    implementation(libs.lifecycleViewmodel)
+    implementation(libs.lifecycleLivedata)
     implementation(libs.retrofit)
     implementation(libs.retrofitMoshiConverter)
+    implementation(libs.moshi)
+    implementation(libs.moshiCodegen)
     implementation(libs.roomKtx)
     implementation(libs.roomRuntime)
+    implementation(libs.hiltAndroid)
+    implementation(libs.hiltNavigation)
+
     ksp(libs.moshiCodegen)
     ksp(libs.hiltCompiler)
     ksp(libs.roomCompiler)
+
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
 
     testImplementation(libs.junit)
     testImplementation(libs.coroutinesTest)
@@ -89,12 +91,10 @@ dependencies {
     testImplementation(libs.roomTesting)
     testImplementation(libs.robolectric)
     testImplementation(libs.turbine)
-    androidTestImplementation(libs.mockkAndroid)
+
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     androidTestImplementation(platform(libs.compose.bom))
     androidTestImplementation(libs.ui.test.junit4)
-
-    debugImplementation(libs.ui.tooling)
-    debugImplementation(libs.ui.test.manifest)
+    androidTestImplementation(libs.mockkAndroid)
 }
