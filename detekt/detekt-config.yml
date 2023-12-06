@@ -1,10 +1,6 @@
 build:
   maxIssues: 0
   weights:
-  # complexity: 2
-  # LongParameterList: 1
-  # style: 1
-  # comments: 1
 
 config:
   validation: true
@@ -15,22 +11,11 @@ config:
 processors:
   active: true
   exclude:
-  # - 'DetektProgressListener'
-  # - 'FunctionCountProcessor'
-  # - 'PropertyCountProcessor'
-  # - 'ClassCountProcessor'
-  # - 'PackageCountProcessor'
-  # - 'KtFileCountProcessor'
 
 console-reports:
   active: true
   exclude:
-    #  - 'ProjectStatisticsReport'
-    #  - 'ComplexityReport'
-    #  - 'NotificationReport'
-    #  - 'FindingsReport'
     - 'FileBasedFindingsReport'
-  #  - 'BuildFailureReport'
 
 complexity:
   active: true
@@ -41,9 +26,6 @@ complexity:
     active: false
     threshold: 10
     includeStaticDeclarations: false
-  #  CognitiveComplexMethod:
-  #    active: false
-  #    allowedComplexity: 15
   CyclomaticComplexMethod:
     active: false
     threshold: 15
