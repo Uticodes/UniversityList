@@ -26,6 +26,8 @@ jobs:
           title-regex: '.*#\d+.*'
           title-regex-flags: 'g' # optional
           error-message: 'GitHub issue number not found in your title or is invalid'
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
       - name: "Build Android project"
         uses: vgaidarji/android-github-actions-build@v1.0.1
         with:
