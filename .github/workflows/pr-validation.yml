@@ -7,6 +7,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   pr-validation:
+    name: PR Validation
     runs-on: ubuntu-latest
     steps:
       - name: Assign PR to Author
@@ -26,12 +27,21 @@ jobs:
           title-regex: '.*#\d+.*'
           title-regex-flags: 'g' # optional
           error-message: 'GitHub issue number not found in your title or is invalid'
+  build:
+    name: Build Android project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "corretto"
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-      - name: "Build Android project"
-        uses: vgaidarji/android-github-actions-build@v1.0.1
-        with:
-          args: "./gradlew assembleDebug"
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
   lint-check:
     name: Lint checks
     runs-on: ubuntu-latest
