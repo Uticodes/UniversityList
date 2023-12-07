@@ -13,7 +13,7 @@ jobs:
       - name: Assign PR to Author
         uses: samspills/assign-pr-to-author@v1.0
         with:
-          repo-token: '${{ secrets.PROJECT_GITHUB_TOKEN }}'
+          repo-token: ${{ secrets.PROJECT_GITHUB_TOKEN }}
       - name: Lint branch name
         uses: lekterable/branchlint-action@2.0.0
         with:
