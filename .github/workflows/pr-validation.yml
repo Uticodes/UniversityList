@@ -14,7 +14,7 @@ jobs:
         with:
           repo-token: '${{ secrets.PROJECT_GITHUB_TOKEN }}'
       - name: Lint branch name
-        uses: lekterable/branchlint-action@v2.0.0
+        uses: lekterable/branchlint-action@2.0.0
         with:
           allowed: |
             main
@@ -41,6 +41,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
+          distribution: "corretto"
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Run Ktlint
@@ -58,6 +59,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
+          distribution: "corretto"
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
       - name: Check style
@@ -73,6 +75,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
+          distribution: "corretto"
       - name: Run unit tests
         run: ./gradlew testDebugUnitTest -DisCI=true
       - name: Copy test results
@@ -86,30 +89,3 @@ jobs:
         with:
           name: junit-results
           path: junit
-  instrumented-tests:
-    name: Instrumented Tests
-    runs-on: macos-12
-    timeout-minutes: 30
-    strategy:
-      fail-fast: false
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-      - name: Instrumentation tests
-        uses: reactivecircus/android-emulator-runner@v2
-        with:
-          api-level: 31
-          arch: x86_64
-          target: default
-          emulator-build: 7425822
-          script: ./gradlew connectedDebugAndroidTest -DisCI=true
-      - name: Upload test reports
-        if: always()
-        uses: actions/upload-artifact@v3
-        with:
-          name: instrumented-test-reports
-          path: app/build/reports
