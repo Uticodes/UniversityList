@@ -10,36 +10,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Assign PR to Author
-        uses: Uticodes/assign-pr-to-author@v1.0
+        uses: samspills/assign-pr-to-author@v1.0
         with:
           repo-token: '${{ secrets.PROJECT_GITHUB_TOKEN }}'
       - name: Lint branch name
-        uses: Uticodes/branchlint-action@v1.0.0
+        uses: lekterable/branchlint-action@v1.0.0
         with:
           allowed: |
             main
             /(feature|bugfix|hotfix)\/\d{2,}.*/i
             /(release)\/.*/i
       - name: Title PR Name
-        uses: actions/pr-lint-action@master
+        uses: seferov/pr-lint-action@master
         with:
           title-regex: '^#\d{2,}.*'
           title-regex-flags: 'g' # optional
           error-message: 'GitHub issue number not found in your title or is invalid'
       - name: "Build Android project"
-        uses: actions/android-github-actions-build@v1.0.1
+        uses: vgaidarji/android-github-actions-build@v1.0.1
         with:
           args: "./gradlew assembleDebug"
-#  assign-pr:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v2
-#
-#      - name: Assign PR to Author
-#        uses: samspills/assign-pr-to-author@v1.0
-#        with:
-#          repo-token: ${{ secrets.PROJECT_GITHUB_TOKEN }}
   lint-check:
     name: Lint checks
     runs-on: ubuntu-latest
