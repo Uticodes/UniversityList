@@ -18,14 +18,14 @@ jobs:
         with:
           allowed: |
             main
-            /(feature|bugfix|hotfix)\/${{ secrets.JIRA_PROJECT_KEY }}-\d{2,}.*/i
+            /(feature|bugfix|hotfix)\/\d{2,}.*/i
             /(release)\/.*/i
       - name: Title PR Name
         uses: seferov/pr-lint-action@master
         with:
-          title-regex: '^${{ secrets.JIRA_PROJECT_KEY }}-\d{2,}.*'
+          title-regex: '^#\d{2,}.*'
           title-regex-flags: 'g' # optional
-          error-message: 'Jira ID not found on your title or is Invalid'
+          error-message: 'GitHub issue number not found in your title or is invalid'
       - name: "Build Android project"
         uses: vgaidarji/android-github-actions-build@v1.0.1
         with:
