@@ -1,4 +1,4 @@
-name: PR Validation
+name: Build and Test
 on:
   pull_request:
     types: [ 'opened', 'edited', 'reopened', 'synchronize', 'labeled', 'unlabeled' ]
@@ -6,27 +6,6 @@ concurrency:
   group: ${{ github.head_ref }}
   cancel-in-progress: true
 jobs:
-  pr-validation:
-    name: PR Validation
-    runs-on: ubuntu-latest
-    steps:
-      - name: Assign PR to Author
-        uses: samspills/assign-pr-to-author@v1.0
-        with:
-          repo-token: ${{ secrets.PROJECT_GITHUB_TOKEN }}
-      - name: Lint branch name
-        uses: lekterable/branchlint-action@2.0.0
-        with:
-          allowed: |
-            main
-            /(develop|feature|bugfix|hotfix)\/\.*/i
-            /(release)\/.*/i
-      - name: Title PR Name
-        uses: seferov/pr-lint-action@master
-        with:
-          title-regex: '.*#\d+.*'
-          title-regex-flags: 'g' # optional
-          error-message: 'GitHub issue number not found in your title or is invalid'
   build:
     name: Build Android project
     runs-on: ubuntu-latest
