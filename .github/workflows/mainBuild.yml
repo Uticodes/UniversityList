@@ -1,0 +1,82 @@
+name: Build and Test
+on:
+  pull_request:
+    types: [ 'opened', 'edited', 'reopened', 'synchronize', 'labeled', 'unlabeled' ]
+concurrency:
+  group: ${{ github.head_ref }}
+  cancel-in-progress: true
+jobs:
+  build:
+    name: Build Android project
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "corretto"
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+      - name: Build with Gradle
+        run: ./gradlew assembleDebug
+  lint-check:
+    name: Lint checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "corretto"
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Run Ktlint
+        run: ./scripts/ktlint.sh -F -DisCI=true
+      - name: Run Detetk
+        run: ./gradlew detekt -DisCI=true
+  android-lint-check:
+    name: Android lint checks
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "corretto"
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Check style
+        run: ./gradlew lintDebug -DisCI=true
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: "corretto"
+      - name: Run unit tests
+        run: ./gradlew testDebugUnitTest -DisCI=true
+      - name: Copy test results
+        if: always()
+        run: |
+          mkdir -p junit
+          find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: junit-results
+          path: junit
