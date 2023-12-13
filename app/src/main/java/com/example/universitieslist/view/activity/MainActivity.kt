@@ -1,5 +1,7 @@
-package com.example.universitieslist
+package com.example.universitieslist.view
 
+import UniversitiesScreen
+import UniversityListView
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,25 +24,18 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Greeting("Android")
+                    UniversityListView()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     UniversitiesListTheme {
-        Greeting("Android")
+        UniversityListView()
     }
 }
