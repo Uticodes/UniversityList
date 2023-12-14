@@ -14,26 +14,17 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.example.universitieslist.R
-import com.example.universitieslist.view.components.SearchToolbar
+import com.example.universitieslist.view.components.AppToolbar
 import com.example.universitieslist.view.components.UniversityList
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UniversitiesScreen() {
 
-    var searchInput by remember { mutableStateOf("") }
-
     Scaffold(
         topBar = {
-            SearchToolbar(
+            AppToolbar(
                 title = stringResource(R.string.app_name),
-                inputValue = searchInput,
-                onValueChange = {
-                    searchInput = it
-                },
-                onClose = {
-                    searchInput = ""
-                }
             )
         },
         content = { padding ->
