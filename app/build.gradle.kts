@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+    alias(libs.plugins.kapt)
 }
 
 android {
@@ -80,7 +81,7 @@ dependencies {
     implementation(libs.hiltNavigation)
 
     ksp(libs.moshiCodegen)
-    ksp(libs.hiltCompiler)
+    kapt(libs.hiltCompiler)
     ksp(libs.roomCompiler)
 
     debugImplementation(libs.ui.tooling)

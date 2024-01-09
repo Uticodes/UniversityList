@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.ksp) apply false
     alias(libs.plugins.hilt) apply false
     alias(libs.plugins.detetk)
+    alias(libs.plugins.kapt) apply false
 }
 
 tasks.register("clean", Delete::class) {
