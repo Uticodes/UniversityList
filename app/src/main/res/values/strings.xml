@@ -2,5 +2,8 @@
     <string name="app_name">Universities List</string>
     <string name="search">Search</string>
     <string name="close">Close</string>
+    <string name="name">Name:</string>
+    <string name="website">Website:</string>
+    <string name="country">Country:</string>
 
 </resources>

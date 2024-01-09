@@ -9,9 +9,11 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
+import com.example.universitieslist.R
 import com.example.universitieslist.ui.theme.Dimensions.dimens12
 import com.example.universitieslist.ui.theme.Dimensions.dimens6
 import com.example.universitieslist.ui.theme.Dimensions.dimens8
@@ -29,16 +31,16 @@ fun UniversityItem(schoolName: String, website: String, country: String) {
     ) {
         Column(modifier = Modifier.padding(dimens8)) {
             TextItem(
-                hintText = "Name",
+                hintText = stringResource(R.string.name),
                 title = schoolName,
                 textFont = FontSize.fontSize16
             )
             TextItem(
-                hintText = "Website",
+                hintText = stringResource(R.string.website),
                 title = website
             )
             TextItem(
-                hintText = "Country",
+                hintText = stringResource(R.string.country),
                 title = country
             )
         }
@@ -53,7 +55,7 @@ fun TextItem(
 ) {
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "$hintText:",
+            text = hintText,
             style = TextStyle(
                 color = OffWhite,
                 fontSize = FontSize.fontSize12,
