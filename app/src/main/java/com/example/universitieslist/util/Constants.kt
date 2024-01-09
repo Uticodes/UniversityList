@@ -6,5 +6,6 @@ object Constants {
 
     // Network Messages
     const val UNKNOWN_ERROR = "Opps! Unknown error, kindly try again"
+    const val ERROR_FETCHING = "Error fetching universities: "
     const val NO_UNIVERSITIES_FOUND = "No universities found for the country"
 }
