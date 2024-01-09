@@ -4,16 +4,21 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.universitieslist.remote.model.UniversityResponse
 import com.example.universitieslist.remote.repository.UniversityRepository
+import com.example.universitieslist.util.Constants.COUNTRY_NAME
+import com.example.universitieslist.util.Constants.NO_UNIVERSITIES_FOUND
+import com.example.universitieslist.util.DispatcherHelper
+import com.example.universitieslist.util.UIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class UniversityViewModel @Inject constructor(
-    private val universityRepository: UniversityRepository
+    private val universityRepository: UniversityRepository,
+    private val dispatcher: DispatcherHelper
 ) : ViewModel() {
 
     private val _universityData = MutableStateFlow<List<UniversityResponse>>(emptyList())
@@ -23,27 +28,24 @@ class UniversityViewModel @Inject constructor(
     val uiState: StateFlow<UIState> = _uiState
 
     init {
-        fetchUniversities("United State")
+        fetchUniversities()
     }
 
-    private fun fetchUniversities(country: String) {
-        viewModelScope.launch {
-            _uiState.value = UIState.Loading
+    private fun fetchUniversities() {
+        viewModelScope.launch(dispatcher.io()) {
+            _uiState.update { UIState.Loading }
             try {
-                universityRepository.getUniversities(country).collect { universities ->
-                    _universityData.value = universities
-                    Timber.d("Result: $universities")
-                    _uiState.value = UIState.Success
+                universityRepository.getUniversities(COUNTRY_NAME).collect { universities ->
+                    if (universities.isNotEmpty()) {
+                        _universityData.value = universities
+                        _uiState.update { UIState.Success }
+                    } else {
+                        _uiState.update { UIState.Error(Exception(NO_UNIVERSITIES_FOUND)) }
+                    }
                 }
             } catch (e: Exception) {
-                _uiState.value = UIState.Error(e)
+                _uiState.update { UIState.Error(e) }
             }
         }
-    }
-
-    sealed class UIState {
-        object Loading : UIState()
-        object Success : UIState()
-        data class Error(val exception: Throwable) : UIState()
     }
 }

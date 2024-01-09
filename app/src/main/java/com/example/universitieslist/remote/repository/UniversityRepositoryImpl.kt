@@ -14,12 +14,12 @@ class UniversityRepositoryImpl @Inject constructor(
         try {
             val response = apiService.getUniversities(country)
             if (response.isSuccessful && response.body() != null) {
-                emit(response.body()!!)
+                emit(response.body().orEmpty())
             } else {
                 throw FetchUniversitiesException("Error fetching universities: ${response.errorBody()?.string()}")
             }
-        } catch (e: Exception) {
-            throw FetchUniversitiesException(e.toString())
+        } catch (error: Exception) {
+            throw FetchUniversitiesException(error.toString())
         }
     }
 }
