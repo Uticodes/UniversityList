@@ -19,7 +19,7 @@ class UniversityRepositoryImpl @Inject constructor(
             } else {
                 throw FetchUniversitiesException(
                     ERROR_FETCHING + "${
-                        response.errorBody()?.string()
+                    response.errorBody()?.string()
                     }"
                 )
             }
