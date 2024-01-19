@@ -1,7 +1,7 @@
-package com.example.universitieslist.remote.repository
+package com.example.universitieslist.data.remote.repository
 
-import com.example.universitieslist.remote.ApiService
-import com.example.universitieslist.remote.model.UniversityResponse
+import com.example.universitieslist.data.model.UniversityResponse
+import com.example.universitieslist.data.remote.ApiService
 import com.example.universitieslist.util.Constants.ERROR_FETCHING
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

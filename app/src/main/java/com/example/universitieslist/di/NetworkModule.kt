@@ -1,6 +1,6 @@
 package com.example.universitieslist.di
 
-import com.example.universitieslist.remote.ApiService
+import com.example.universitieslist.data.remote.ApiService
 import com.example.universitieslist.util.Constants.BASE_URL
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory

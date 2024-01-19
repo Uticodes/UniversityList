@@ -2,8 +2,8 @@ package com.example.universitieslist.view.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.universitieslist.remote.model.UniversityResponse
-import com.example.universitieslist.remote.repository.UniversityRepository
+import com.example.universitieslist.data.model.UniversityResponse
+import com.example.universitieslist.data.remote.repository.UniversityRepository
 import com.example.universitieslist.util.Constants.COUNTRY_NAME
 import com.example.universitieslist.util.Constants.NO_UNIVERSITIES_FOUND
 import com.example.universitieslist.util.DispatcherHelper

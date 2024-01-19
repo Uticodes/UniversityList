@@ -1,4 +1,4 @@
-package com.example.universitieslist.remote.model
+package com.example.universitieslist.data.model
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

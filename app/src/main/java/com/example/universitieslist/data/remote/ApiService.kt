@@ -1,6 +1,6 @@
-package com.example.universitieslist.remote
+package com.example.universitieslist.data.remote
 
-import com.example.universitieslist.remote.model.UniversityResponse
+import com.example.universitieslist.data.model.UniversityResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

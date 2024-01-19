@@ -1,6 +1,6 @@
-package com.example.universitieslist.remote.repository
+package com.example.universitieslist.data.remote.repository
 
-import com.example.universitieslist.remote.model.UniversityResponse
+import com.example.universitieslist.data.model.UniversityResponse
 import kotlinx.coroutines.flow.Flow
 
 interface UniversityRepository {

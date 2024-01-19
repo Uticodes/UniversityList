@@ -1,8 +1,8 @@
 package com.example.universitieslist.di
 
-import com.example.universitieslist.remote.ApiService
-import com.example.universitieslist.remote.repository.UniversityRepository
-import com.example.universitieslist.remote.repository.UniversityRepositoryImpl
+import com.example.universitieslist.data.remote.ApiService
+import com.example.universitieslist.data.remote.repository.UniversityRepository
+import com.example.universitieslist.data.remote.repository.UniversityRepositoryImpl
 import com.example.universitieslist.util.DispatcherHelper
 import dagger.Module
 import dagger.Provides
