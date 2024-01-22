@@ -6,7 +6,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.example.universitieslist.ui.theme.Dimensions.dimens20
-import com.example.universitieslist.ui.theme.Dimensions.dimens6
 
 @Composable
 fun UniversityList() {
@@ -16,7 +15,7 @@ fun UniversityList() {
             .padding(
                 start = dimens20,
                 end = dimens20,
-                bottom = dimens6,
+                bottom = dimens20,
             )
     ) {
         items(count = 15) {

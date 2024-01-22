@@ -18,7 +18,6 @@ android {
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
-        multiDexEnabled = true
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -93,7 +92,6 @@ dependencies {
     testImplementation(libs.roomTesting)
     testImplementation(libs.robolectric)
     testImplementation(libs.turbine)
-    testImplementation(libs.kotlinTest)
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)

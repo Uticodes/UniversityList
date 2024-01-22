@@ -16,6 +16,7 @@ import com.example.universitieslist.view.components.UniversityList
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun UniversitiesScreen() {
+
     Scaffold(
         topBar = {
             AppToolbar(
