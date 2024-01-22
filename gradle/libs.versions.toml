@@ -54,6 +54,7 @@ roomCompiler = { group = "androidx.room", name = "room-compiler", version.ref = 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 coroutinesTest = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+kotlinTest = { group = "org.jetbrains.kotlin", name = "kotlin-test", version.ref = "org-jetbrains-kotlin-android" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
