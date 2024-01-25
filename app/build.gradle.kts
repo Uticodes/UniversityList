@@ -79,9 +79,9 @@ dependencies {
     implementation(libs.hiltAndroid)
     implementation(libs.hiltNavigation)
 
-    ksp(libs.moshiCodegen)
+    kapt(libs.moshiCodegen)
     kapt(libs.hiltCompiler)
-    ksp(libs.roomCompiler)
+    kapt(libs.roomCompiler)
 
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
