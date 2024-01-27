@@ -39,12 +39,8 @@ class UniversityRepositoryImplTest {
 
         val resultList = universityRepositoryImpl.getUniversities(countryName).toList()
 
-        assertTrue("Result list should not be empty", resultList.isNotEmpty())
-        assertEquals(
-            "The returned university list should match the expected mock data",
-            expectedUniversityList,
-            resultList.first()
-        )
+        assertTrue(resultList.isNotEmpty())
+        assertEquals(expectedUniversityList, resultList.first())
     }
 
     @Test
@@ -58,10 +54,7 @@ class UniversityRepositoryImplTest {
             universityRepositoryImpl.getUniversities(COUNTRY_NAME).toList()
         }
 
-        assertTrue(
-            "Error message should indicate an issue fetching universities",
-            exception.message?.contains(UNABLE_TO_FETCHING) == true
-        )
+        assertTrue(exception.message?.contains(UNABLE_TO_FETCHING) == true)
     }
 
     @Test
@@ -72,9 +65,6 @@ class UniversityRepositoryImplTest {
             universityRepositoryImpl.getUniversities(COUNTRY_NAME).toList()
         }
 
-        assertTrue(
-            "Error message should indicate an unexpected error",
-            exception.message?.contains(UNABLE_TO_FETCHING) == true
-        )
+        assertTrue(exception.message?.contains(UNABLE_TO_FETCHING) == true)
     }
 }
