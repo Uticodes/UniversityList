@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.example.universitieslist.data.model.UniversityResponse
 import com.example.universitieslist.ui.theme.Dimensions.dimens20
 
 @Composable
-fun UniversityList() {
+fun UniversityList(
+    universityList: List<UniversityResponse>,
+) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -18,11 +21,12 @@ fun UniversityList() {
                 bottom = dimens20,
             )
     ) {
-        items(count = 15) {
+        items(count = universityList.size) { index ->
+            val university = universityList[index]
             UniversityItem(
-                schoolName = "African University of Science and Technology Coming to an end",
-                website = "http://www.aust-abuja.org/",
-                country = "Nigeria"
+                schoolName = university.name.orEmpty(),
+                website = university.webPages?.firstOrNull().orEmpty(),
+                country = university.country.orEmpty()
             )
         }
     }
