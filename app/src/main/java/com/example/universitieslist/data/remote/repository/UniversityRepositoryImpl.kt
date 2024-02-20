@@ -10,7 +10,7 @@ class UniversityRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : UniversityRepository {
 
-    override suspend fun getUniversities(country: String): Flow<List<UniversityResponse>> {
+    override suspend fun getUniversities(country: String): Flow<Result<List<UniversityResponse>?>> {
         return performApiCall(
             apiCall = { apiService.getUniversities(country) },
             country = country

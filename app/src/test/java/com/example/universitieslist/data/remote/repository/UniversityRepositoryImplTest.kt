@@ -1,70 +1,47 @@
 package com.example.universitieslist.data.remote.repository
 
-import com.example.universitieslist.data.model.UniversityResponse
 import com.example.universitieslist.data.remote.ApiService
 import com.example.universitieslist.util.Constants.COUNTRY_NAME
-import com.example.universitieslist.util.Constants.UNABLE_TO_FETCHING
-import com.example.universitieslist.util.Constants.UNKNOWN_ERROR
 import com.example.universitieslist.util.FetchUniversitiesException
 import com.example.universitieslist.util.mockUniversityResponses
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.flow.toList
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
-import okhttp3.ResponseBody
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 import retrofit2.Response
-import kotlin.test.assertFailsWith
 
 class UniversityRepositoryImplTest {
 
     private val mockApiService = mockk<ApiService>()
-    private lateinit var universityRepositoryImpl: UniversityRepositoryImpl
+    private lateinit var repository: UniversityRepositoryImpl
 
     @Before
     fun setUp() {
-        universityRepositoryImpl = UniversityRepositoryImpl(mockApiService)
+        repository = UniversityRepositoryImpl(mockApiService)
     }
 
     @Test
     fun `getUniversities list when response is successful`() = runTest {
-        val countryName = COUNTRY_NAME
-        val expectedUniversityList = mockUniversityResponses
-        val fakeResponse = Response.success(expectedUniversityList)
+        coEvery { mockApiService.getUniversities(COUNTRY_NAME) } returns Response.success(mockUniversityResponses)
 
-        coEvery { mockApiService.getUniversities(eq(countryName)) } returns fakeResponse
-
-        val resultList = universityRepositoryImpl.getUniversities(countryName).toList()
-
-        assertTrue(resultList.isNotEmpty())
-        assertEquals(expectedUniversityList, resultList.first())
+        val result = repository.getUniversities(COUNTRY_NAME).first()
+        assertTrue(result.isSuccess)
+        assertEquals(mockUniversityResponses, result.getOrNull())
     }
 
     @Test
-    fun `getUniversities throws FetchUniversitiesException on API error response`() = runTest {
-        val errorResponseBody = mockk<ResponseBody>(relaxed = true)
-        val errorResponse = Response.error<List<UniversityResponse>>(500, errorResponseBody)
+    fun `getUniversities throws error message on API error response`() = runTest {
+        coEvery { mockApiService.getUniversities(any()) } returns
+            Response.error(500, "School Not Found".toResponseBody())
 
-        coEvery { mockApiService.getUniversities(any()) } returns errorResponse
+        val result = repository.getUniversities(COUNTRY_NAME).first()
 
-        val exception = assertFailsWith<FetchUniversitiesException> {
-            universityRepositoryImpl.getUniversities(COUNTRY_NAME).toList()
-        }
-
-        assertTrue(exception.message?.contains(UNABLE_TO_FETCHING) == true)
-    }
-
-    @Test
-    fun `getUniversities throws FetchUniversitiesException on unexpected exception`() = runTest {
-        coEvery { mockApiService.getUniversities(any()) } throws RuntimeException(UNKNOWN_ERROR)
-
-        val exception = assertFailsWith<FetchUniversitiesException> {
-            universityRepositoryImpl.getUniversities(COUNTRY_NAME).toList()
-        }
-
-        assertTrue(exception.message?.contains(UNABLE_TO_FETCHING) == true)
+        assertTrue(result.isFailure)
+        assertTrue(result.exceptionOrNull() is FetchUniversitiesException)
     }
 }

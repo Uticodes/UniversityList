@@ -10,7 +10,7 @@ import com.example.universitieslist.ui.theme.Dimensions.dimens20
 
 @Composable
 fun UniversityList(
-    universityList: List<UniversityResponse>,
+    universityList: List<UniversityResponse>?,
 ) {
     LazyColumn(
         modifier = Modifier
@@ -21,13 +21,19 @@ fun UniversityList(
                 bottom = dimens20,
             )
     ) {
-        items(count = universityList.size) { index ->
-            val university = universityList[index]
-            UniversityItem(
-                schoolName = university.name.orEmpty(),
-                website = university.webPages?.firstOrNull().orEmpty(),
-                country = university.country.orEmpty()
-            )
+        universityList?.forEach { university ->
+            val hasContent = university.name.isNullOrEmpty().not() ||
+                university.webPages.isNullOrEmpty().not() ||
+                university.country.isNullOrEmpty().not()
+            if (hasContent) {
+                item {
+                    UniversityItem(
+                        schoolName = university.name.orEmpty(),
+                        website = university.webPages?.firstOrNull().orEmpty(),
+                        country = university.country.orEmpty()
+                    )
+                }
+            }
         }
     }
 }

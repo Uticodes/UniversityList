@@ -3,7 +3,8 @@ package com.example.universitieslist.di
 import com.example.universitieslist.data.remote.ApiService
 import com.example.universitieslist.data.remote.repository.UniversityRepository
 import com.example.universitieslist.data.remote.repository.UniversityRepositoryImpl
-import com.example.universitieslist.util.DispatcherHelper
+import com.example.universitieslist.dispatcher.DispatcherHelper
+import com.example.universitieslist.dispatcher.DispatcherHelperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,5 +22,5 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideDispatcherHelper(): DispatcherHelper = DispatcherHelper()
+    fun provideDispatcherHelper(): DispatcherHelper = DispatcherHelperImpl()
 }
