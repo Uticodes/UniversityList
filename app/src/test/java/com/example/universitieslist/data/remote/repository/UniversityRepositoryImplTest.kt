@@ -3,6 +3,7 @@ package com.example.universitieslist.data.remote.repository
 import com.example.universitieslist.data.remote.ApiService
 import com.example.universitieslist.util.Constants.COUNTRY_NAME
 import com.example.universitieslist.util.FetchUniversitiesException
+import com.example.universitieslist.util.mockUniversityModelList
 import com.example.universitieslist.util.mockUniversityResponses
 import io.mockk.coEvery
 import io.mockk.mockk
@@ -27,11 +28,15 @@ class UniversityRepositoryImplTest {
 
     @Test
     fun `getUniversities list when response is successful`() = runTest {
-        coEvery { mockApiService.getUniversities(COUNTRY_NAME) } returns Response.success(mockUniversityResponses)
+        coEvery { mockApiService.getUniversities(COUNTRY_NAME) } returns Response.success(
+            mockUniversityResponses
+        )
 
         val result = repository.getUniversities(COUNTRY_NAME).first()
         assertTrue(result.isSuccess)
-        assertEquals(mockUniversityResponses, result.getOrNull())
+        result.onSuccess { universities ->
+            assertEquals(mockUniversityModelList, universities)
+        }
     }
 
     @Test

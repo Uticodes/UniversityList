@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.universitieslist.data.remote.repository.UniversityRepository
 import com.example.universitieslist.dispatcher.DispatcherHelperImplTest
 import com.example.universitieslist.util.Constants
-import com.example.universitieslist.util.mockUniversityResponses
+import com.example.universitieslist.util.mockUniversityModelList
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
@@ -32,7 +32,7 @@ class UniversityViewModelTest {
     private lateinit var repository: UniversityRepository
 
     private val countryName = Constants.COUNTRY_NAME
-    private val expectedUniversityList = mockUniversityResponses
+    private val expectedUniversityList = mockUniversityModelList
 
     @Before
     fun setUp() {
