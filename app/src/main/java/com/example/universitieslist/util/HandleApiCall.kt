@@ -1,30 +1,27 @@
 package com.example.universitieslist.util
 
 import com.example.universitieslist.util.Constants.UNKNOWN_ERROR
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 import timber.log.Timber
 
 suspend fun <T> performApiCall(
     apiCall: suspend () -> Response<T>,
-    country: String,
-): Flow<T> = flow {
+    country: String
+): Result<T?> {
     val unableToFetchMessage = "${Constants.UNABLE_TO_FETCHING} $country"
 
-    try {
+    return try {
         val response = apiCall()
-        val responseBody = response.body()
-        if (response.isSuccessful && responseBody != null) {
-            emit(responseBody)
+        if (response.isSuccessful) {
+            Result.success(response.body())
         } else {
             val errorBody = response.errorBody()?.string() ?: UNKNOWN_ERROR
             val errorMessage = "$unableToFetchMessage - HTTP ${response.code()}: $errorBody"
             Timber.e("API Error", errorMessage)
-            throw FetchUniversitiesException(unableToFetchMessage)
+            Result.failure(FetchUniversitiesException(unableToFetchMessage))
         }
-    } catch (error: Exception) {
-        Timber.e("API Error", "$unableToFetchMessage ${error.localizedMessage}", error)
-        throw FetchUniversitiesException("$unableToFetchMessage, $error")
+    } catch (e: Exception) {
+        Timber.e(e, "API call failed")
+        Result.failure(e)
     }
 }
